@@ -12,7 +12,7 @@ class REINFORCE_Agent():
 		self.STEP_SIZE = STEP_SIZE
 		self.MAX_EPISODE_LENGTH = MAX_EPISODE_LENGTH
 
-		self.weights = ((2 * np.random.ranf([( 4 * 4 ) + 1])) - 1)/2.0
+		self.weights = ((2 * np.random.ranf([( 2 * 4 ) + 1])) - 1)/2.0
 
 	def generateEpisode(self):
 		current_state = self.env.START_STATE
@@ -20,7 +20,11 @@ class REINFORCE_Agent():
 		while ((len(episode) < self.MAX_EPISODE_LENGTH) or not(current_state == self.env.END_STATE)):
 			softmax_probabilities = self.getSoftmaxProbabilities(current_state)
 			action_taken = self.pickAction(softmax_probabilities)
-			
+			next_state = self.env.transition_dynamics[current_state][action_taken]
+            reward = self.env.immediate_reward_dynamics[current_state][action_taken]
+            episode_step = (current_state, action_taken, reward)
+            episode.append(episode_step)
+            current_state = next_state
 			
 	def getSoftmaxProbabilities(self, current_state):
 		softmax_probabilities = []
@@ -40,3 +44,8 @@ class REINFORCE_Agent():
 			if random_throw < np.sum(softmax_probabilities[0 : (iterator + 1)]:
 				break
 		return self.env.action_space[iterator]
+                                     
+    def getFeatureVector(self, state, action):
+        distance_x = int(int(state)/12) + 1
+        distance_y = int(int(state)%12) + 1
+        
