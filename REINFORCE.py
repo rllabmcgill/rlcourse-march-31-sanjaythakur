@@ -14,6 +14,8 @@ class REINFORCE_Agent():
 
 		self.weights = ((2 * np.random.ranf([( 2 * 4 ) + 1])) - 1)/2.0
 
+		self.goal_reached = 0
+
 	def generateEpisode(self):
 		current_state = self.env.START_STATE
 		episode = []
@@ -27,7 +29,7 @@ class REINFORCE_Agent():
 			current_state = next_state
 
 		if not len(episode) == self.MAX_EPISODE_LENGTH:
-			print('Reached END STATE')
+			self.goal_reached += 1
 			episode.append((self.env.END_STATE, self.env.action_space[0], 0))
 
 		return episode
