@@ -145,13 +145,20 @@ class Cliff_Walking_Environment():
 			if not state in self.cliff_states:
 				print(str(state) + str(self.immediate_reward_dynamics[state]))
 
-	def printEnvironment(self, states_in_episode = []):
-	    for state in all_states:
-	        if (int(state) % 12) == 0:
-	            print("\n")	        
-	        if state in states_in_episode:
-	            state = state.replace(state, GREEN(state))	            
-	        if state in self.cliff_states:
-	            state = state.replace(state, RED(state))	        
-	        print(state, "\t", end = '')	        
-	    print("\n")
+	def printEnvironment(self, episode = []):
+		states_in_episode = []
+		for step in episode:
+			states_in_episode.append(step[0])
+
+		for state in self.all_states:
+			if (int(state) % 12) == 0:
+				print("\n")
+			if state in states_in_episode:
+				state = state.replace(state, GREEN(state))
+
+			if state in self.cliff_states:
+				state = state.replace(state, RED(state))
+
+			print(state, "\t", end = '')
+
+		print("\n")
