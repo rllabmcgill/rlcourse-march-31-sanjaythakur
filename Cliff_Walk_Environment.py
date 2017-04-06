@@ -134,7 +134,6 @@ class Cliff_Walking_Environment():
 		immediate_reward_dynamics[self.END_STATE] = {self.ACTION_UP : 0, self.ACTION_RIGHT : 0, self.ACTION_DOWN: 0, self.ACTION_LEFT: 0}
 		return immediate_reward_dynamics
 
-
 	def printMDP(self):
 		for state in self.all_states:
 			if not state in self.cliff_states:
@@ -145,3 +144,14 @@ class Cliff_Walking_Environment():
 		for state in self.all_states:
 			if not state in self.cliff_states:
 				print(str(state) + str(self.immediate_reward_dynamics[state]))
+
+	def printEnvironment(self, states_in_episode = []):
+	    for state in all_states:
+	        if (int(state) % 12) == 0:
+	            print("\n")	        
+	        if state in states_in_episode:
+	            state = state.replace(state, GREEN(state))	            
+	        if state in self.cliff_states:
+	            state = state.replace(state, RED(state))	        
+	        print(state, "\t", end = '')	        
+	    print("\n")
