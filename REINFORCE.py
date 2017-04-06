@@ -3,7 +3,7 @@ import numpy as np
 import random
 
 class REINFORCE_Agent():
-	def __init__(self, env, GAMMA = 0.9, STEP_SIZE = 0.001, MAX_EPISODE_LENGTH = 300, DO_PLANNING = False):
+	def __init__(self, env, GAMMA = 0.9, STEP_SIZE = 0.00001, MAX_EPISODE_LENGTH = 300, DO_PLANNING = False):
 		if env == None:
 			sys.exit('Environment not passed in the agent. Program is terminating')
 
@@ -27,7 +27,8 @@ class REINFORCE_Agent():
 			current_state = next_state
 
 		if not len(episode) == self.MAX_EPISODE_LENGTH:
-			episode.append((self.END_STATE, self.env.action_space[0], 0))
+			print('Reached END STATE')
+			episode.append((self.env.END_STATE, self.env.action_space[0], 0))
 
 		return episode
 			
@@ -41,6 +42,7 @@ class REINFORCE_Agent():
 		return softmax_probabilities
 
 	def softmax(self, x):
+		#print(x)
 		return np.exp(x) / np.sum(np.exp(x), axis=0)
 
 	def pickAction(self, softmax_probabilities):
@@ -53,8 +55,8 @@ class REINFORCE_Agent():
 	def getFeatureVector(self, state, action):
 		feature_vector = [1.0]
 
-		distance_x = int(int(state)/12) + 1
-		distance_y = int(int(state)%12) + 1
+		distance_x = int(int(state)/12)
+		distance_y = int(int(state)%12)
 
 		for each_action in self.env.action_space:
 			if action == each_action:
@@ -70,6 +72,7 @@ class REINFORCE_Agent():
 		discounted_return = 0.0
 		for episode_iterator in range(len(episode) - 1, -1, -1):
 			discounted_return = (self.GAMMA * discounted_return) + episode[episode_iterator][2]
+		return discounted_return
 
 	def evaluateScoreFunction(self, state, action):
 		state_action_feature = self.getFeatureVector(state, action)

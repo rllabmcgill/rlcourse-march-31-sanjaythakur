@@ -2,7 +2,7 @@ import Cliff_Walk_Environment
 import REINFORCE
 
 #Defining the hyper-parameters
-NUMBER_OF_EPISODES_TO_CONSIDER = 10
+NUMBER_OF_EPISODES_TO_CONSIDER = 1000
 GAMMA = 0.9
 
 env = Cliff_Walk_Environment.Cliff_Walking_Environment(START_STATE = '36', END_STATE = '47')
@@ -10,6 +10,7 @@ reinforce_agent = REINFORCE.REINFORCE_Agent(env = env)
 
 for episode_iterator in range(NUMBER_OF_EPISODES_TO_CONSIDER):
 	episode = reinforce_agent.generateEpisode()
+	print(reinforce_agent.weights)
 	env.printEnvironment(episode)
 	for episode_iterator in range(len(episode)):
 		episode_step = episode[episode_iterator]
