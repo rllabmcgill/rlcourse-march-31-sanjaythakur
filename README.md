@@ -24,3 +24,4 @@ There are three different files made for accompolishing the task.
     This defines an agent which uses REINFORCE algorithm to learn to act model-free in an environment.
 3. **PolicyGradientOnCliffWalk.ipynb**
     This combines the environment and the agent so that the learning process by an agent is performed in a model-free manner in the Cliff World Environment.
+    The nature of the environment made it suitable to encode the features in a tabular setting.
