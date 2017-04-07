@@ -25,3 +25,9 @@ There are three different files made for accompolishing the task.
 3. **PolicyGradientOnCliffWalk.ipynb**
     This combines the environment and the agent so that the learning process by an agent is performed in a model-free manner in the Cliff World Environment.
     The nature of the environment made it suitable to encode the features in a tabular setting.
+
+## Observation and results
+
+Owing to time constraints, the agent was made to learn on 5000 episodes. It was seen that the agent's number of steps taken to the reach the goal state kept on decreasing with more training. However, 5000 episodes were not sufficient enough for it to learn how to act in the environment most optimally. 
+You can see from the *PolicyGradientOnCliff.ipynb' that the number of episodes in any 500 number of consecutive episodes that were able to reach the goal with 200 number of steps kept on increasing with more and more examples. 
+One possible reason behind this slow learning is *REINFORCE*'s well known problem of having a lot of variance. It uses unbiased estimate of what it observes in the environment but at a cost of a lot of variance.
