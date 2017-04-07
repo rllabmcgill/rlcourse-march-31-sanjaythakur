@@ -3,7 +3,7 @@ import numpy as np
 import random
 
 class REINFORCE_Agent():
-	def __init__(self, env, GAMMA = 0.9, STEP_SIZE = 0.00001, MAX_EPISODE_LENGTH = 300, DO_PLANNING = False):
+	def __init__(self, env, GAMMA = 0.9, STEP_SIZE = 0.00001, MAX_EPISODE_LENGTH = 1000, DO_PLANNING = False):
 		if env == None:
 			sys.exit('Environment not passed in the agent. Program is terminating')
 
@@ -12,7 +12,7 @@ class REINFORCE_Agent():
 		self.STEP_SIZE = STEP_SIZE
 		self.MAX_EPISODE_LENGTH = MAX_EPISODE_LENGTH
 
-		self.weights = ((2 * np.random.ranf([( 2 * 4 ) + 1])) - 1)/2.0
+		self.weights = ((2 * np.random.ranf([( 48 * 4 ) + 1])) - 1)/2.0
 
 		self.goal_reached = 0
 
@@ -57,16 +57,13 @@ class REINFORCE_Agent():
 	def getFeatureVector(self, state, action):
 		feature_vector = [1.0]
 
-		distance_x = int(int(state)/12)
-		distance_y = int(int(state)%12)
+		feature = np.eye(48, dtype=int)[int(state)]
 
 		for each_action in self.env.action_space:
 			if action == each_action:
-				feature_vector.append(distance_x)
-				feature_vector.append(distance_y)
+				feature_vector = feature_vector + list(feature)
 			else:
-				feature_vector.append(0.0)
-				feature_vector.append(0.0)
+				feature_vector = feature_vector + list(np.zeros((48,), dtype=np.int))
 
 		return feature_vector
 
